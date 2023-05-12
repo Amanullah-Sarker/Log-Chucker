@@ -1,12 +1,12 @@
-package com.amanullah.logchucker.service.window
+package com.amanullah.logchuckerapp.service.window
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.amanullah.logchucker.databinding.ItemSimpleTextBinding
-import com.amanullah.logchucker.service.window.LoggerAdapter.LoggerViewHolder
+import com.amanullah.logchuckerapp.databinding.ItemSimpleTextBinding
+import com.amanullah.logchuckerapp.service.window.LoggerAdapter.LoggerViewHolder
 
 class LoggerAdapter : RecyclerView.Adapter<LoggerViewHolder>() {
 

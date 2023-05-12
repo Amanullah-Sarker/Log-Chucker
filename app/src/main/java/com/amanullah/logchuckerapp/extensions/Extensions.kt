@@ -1,4 +1,4 @@
-package com.amanullah.logchucker.extensions
+package com.amanullah.logchuckerapp.extensions
 
 import android.content.Context
 import android.util.Log

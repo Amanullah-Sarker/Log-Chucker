@@ -1,4 +1,4 @@
-package com.amanullah.logchucker
+package com.amanullah.logchuckerapp
 
 import org.junit.Test
 

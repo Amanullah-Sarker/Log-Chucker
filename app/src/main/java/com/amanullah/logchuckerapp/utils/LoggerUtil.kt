@@ -1,4 +1,4 @@
-package com.amanullah.logchucker.utils
+package com.amanullah.logchuckerapp.utils
 
 import android.app.ActivityManager
 import android.app.AlertDialog.Builder
@@ -10,7 +10,7 @@ import android.os.Build.VERSION_CODES
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.viewbinding.BuildConfig
-import com.amanullah.logchucker.service.FloatingWindowService
+import com.amanullah.logchuckerapp.service.FloatingWindowService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow

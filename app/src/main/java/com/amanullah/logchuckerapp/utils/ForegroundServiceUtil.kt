@@ -1,4 +1,4 @@
-package com.amanullah.logchucker.utils
+package com.amanullah.logchuckerapp.utils
 
 object ForegroundServiceUtil {
     @Volatile

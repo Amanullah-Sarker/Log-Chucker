@@ -1,4 +1,4 @@
-package com.amanullah.logchucker.service.window
+package com.amanullah.logchuckerapp.service.window
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,9 +11,9 @@ import android.view.WindowManager.LayoutParams
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amanullah.logchucker.R
-import com.amanullah.logchucker.extensions.showToast
-import com.amanullah.logchucker.utils.ForegroundServiceUtil
+import com.amanullah.logchuckerapp.R
+import com.amanullah.logchuckerapp.extensions.showToast
+import com.amanullah.logchuckerapp.utils.ForegroundServiceUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

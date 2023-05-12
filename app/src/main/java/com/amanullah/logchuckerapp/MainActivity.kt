@@ -1,15 +1,12 @@
-package com.amanullah.logchucker
+package com.amanullah.logchuckerapp
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.amanullah.logchucker.databinding.ActivityMainBinding
-import com.amanullah.logchucker.extensions.showToast
-import com.amanullah.logchucker.service.FloatingWindowService
-import com.amanullah.logchucker.utils.LoggerUtil
-import com.amanullah.logchucker.utils.ForegroundServiceUtil
+import com.amanullah.logchuckerapp.databinding.ActivityMainBinding
+import com.amanullah.logchuckerapp.extensions.showToast
+import com.amanullah.logchuckerapp.service.FloatingWindowService
+import com.amanullah.logchuckerapp.utils.LoggerUtil
+import com.amanullah.logchuckerapp.utils.ForegroundServiceUtil
 
 class MainActivity : AppCompatActivity() {
 

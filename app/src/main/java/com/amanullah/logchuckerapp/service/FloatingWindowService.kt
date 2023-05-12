@@ -1,10 +1,10 @@
-package com.amanullah.logchucker.service
+package com.amanullah.logchuckerapp.service
 
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import com.amanullah.logchucker.service.window.LogWindow
+import com.amanullah.logchuckerapp.service.window.LogWindow
 
 class FloatingWindowService : Service() {
     object Factory {

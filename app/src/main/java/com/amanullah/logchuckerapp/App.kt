@@ -1,11 +1,11 @@
-package com.amanullah.logchucker
+package com.amanullah.logchuckerapp
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import com.amanullah.logchucker.extensions.showToast
-import com.amanullah.logchucker.service.FloatingWindowService
-import com.amanullah.logchucker.utils.ForegroundServiceUtil
+import com.amanullah.logchuckerapp.extensions.showToast
+import com.amanullah.logchuckerapp.service.FloatingWindowService
+import com.amanullah.logchuckerapp.utils.ForegroundServiceUtil
 
 class App : Application() {
     private var numRunningActivities = 0
