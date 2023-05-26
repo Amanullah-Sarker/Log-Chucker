@@ -9,6 +9,9 @@ import android.os.Build
 import android.os.IBinder
 import android.view.*
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.rommansabbir.commander.Command
+import com.rommansabbir.commander.Commander
 import com.rommansabbir.commander.CommanderManager
 import com.yoyo.loggerx.ForegroundServiceUtil
 import com.yoyo.loggerx.R
@@ -18,48 +21,72 @@ class LoggerXService : Service() {
     private var params: WindowManager.LayoutParams? = null
     private var windowManager: WindowManager? = null
     private var layoutInflater: LayoutInflater? = null
+    private val adapter = LoggerXAdapter()
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
+    @SuppressLint("InflateParams")
     override fun onCreate() {
         super.onCreate()
         CommanderManager.initialize()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val metrics = applicationContext.resources.displayMetrics
-            val width = metrics.widthPixels
-            val height = metrics.heightPixels
-            // set the layout parameters of the window
-            params = WindowManager.LayoutParams(
-                (width * .9f).toInt(),
-                (height * 0.2f).toInt(),  // Display it on top of other application windows
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,  // Don't let it grab the input focus
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  // Make the underlying application window visible
-                // through any transparent parts
-                PixelFormat.TRANSLUCENT
-            )
-        }
+        CommanderManager.getInstance()
+            .register(LoggerXUtils.SUBSCRIPTION_KEY, object : Commander.Listener {
+                override fun receiveCommand(command: Command) {
+                    when (command.command == LoggerXUtils.LOG_COMMAND) {
+                        true -> {
+                            adapter.addData(command.params.toString())
+                        }
+                        else -> {
+                            // command doesn't match
+                        }
+                    }
+                }
+            })
 
-        layoutInflater =
-            applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = layoutInflater?.inflate(R.layout.floating_view_layout, null)
-        view!!.findViewById<AppCompatImageView>(R.id.closeWindowButton).setOnClickListener {
-            try {
-                ForegroundServiceUtil.allowForegroundService = false
-
-                /*"Log Window is Closed".showToast(context)*/
-            } catch (e: Exception) {
-                e.printStackTrace()
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val metrics = applicationContext.resources.displayMetrics
+                val width = metrics.widthPixels
+                val height = metrics.heightPixels
+                // set the layout parameters of the window
+                params = WindowManager.LayoutParams(
+                    (width * .9f).toInt(),
+                    (height * 0.2f).toInt(),  // Display it on top of other application windows
+                    WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,  // Don't let it grab the input focus
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  // Make the underlying application window visible
+                    // through any transparent parts
+                    PixelFormat.TRANSLUCENT
+                )
             }
-            close()
+
+            layoutInflater =
+                applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            view = layoutInflater?.inflate(R.layout.floating_view_layout, null)
+            view!!.findViewById<AppCompatImageView>(R.id.closeWindowButton).setOnClickListener {
+                try {
+                    ForegroundServiceUtil.allowForegroundService = false
+
+                    /*"Log Window is Closed".showToast(context)*/
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                close()
+            }
+            params!!.gravity = Gravity.TOP
+            params!!.verticalMargin = 0.25f
+            params?.x = 0
+            params?.y = 0
+            windowManager = applicationContext!!.getSystemService(WINDOW_SERVICE) as WindowManager?
+            configTouchListener(view)
+
+            // setup adapter
+            view!!.findViewById<RecyclerView>(R.id.loggerRecyclerView).adapter = adapter
+        } catch (e: Exception) {
+            e.printStackTrace()
+            stopSelf()
         }
-        params!!.gravity = Gravity.TOP
-        params!!.verticalMargin = 0.25f
-        params?.x = 0
-        params?.y = 0
-        windowManager = applicationContext!!.getSystemService(WINDOW_SERVICE) as WindowManager?
-        configTouchListener(view)
     }
 
     private fun configTouchListener(view: View?) {
@@ -127,5 +154,10 @@ class LoggerXService : Service() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CommanderManager.getInstance().unregister(LoggerXUtils.SUBSCRIPTION_KEY)
     }
 }
